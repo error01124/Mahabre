@@ -11,22 +11,20 @@ public class MGuiHandler implements IGuiHandler {
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
 
-		if (tileEntity != null) {
-			if (ID == 0) {
-				return ((TileEntityRecycler)tileEntity).createContainer(player.inventory, player);
-			}
+		if (tileEntity instanceof TileEntityRecycler) {
+			return ((TileEntityRecycler)tileEntity).createContainer(player.inventory, player);
 		}
+		
 		return null;
 	}
 
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
 
-		if (tileEntity != null) {
-			if (ID == 0) {
-				return new GuiRecycler((TileEntityRecycler) tileEntity, player);
-			}
+		if (tileEntity instanceof TileEntityRecycler) {
+			return new GuiRecycler((TileEntityRecycler) tileEntity, player);	
 		}
+		
 		return null;
 	}
 }

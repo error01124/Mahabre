@@ -59,7 +59,6 @@ public class TileEntityRecycler extends TileEntityLockable implements ITickable 
 		if (index == 0 && !flag) {
 			totalRecycleTime = getRecycleTime();
 			recycleTime = 0;
-			// markDirty();
 		}
 	}
 

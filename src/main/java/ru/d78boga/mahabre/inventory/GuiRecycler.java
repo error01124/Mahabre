@@ -5,11 +5,11 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
-import ru.d78boga.mahabre.Mahabre;
 import ru.d78boga.mahabre.tileentities.TileEntityRecycler;
+import ru.d78boga.mahabre.util.Util;
 
 public class GuiRecycler extends GuiContainer {
-	private ResourceLocation texture = new ResourceLocation(Mahabre.MODID, "textures/gui/container/recycler.png");
+	private ResourceLocation texture = Util.locate("textures/gui/container/recycler.png");
 	private InventoryPlayer playerInventory;
 	private TileEntityRecycler tileRecycler;
 
@@ -27,8 +27,8 @@ public class GuiRecycler extends GuiContainer {
 	}
 
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		String s = tileRecycler.getDisplayName().getUnformattedText();
-		fontRenderer.drawString(s, xSize / 2 - fontRenderer.getStringWidth(s) / 2, 6, 4210752);
+		String name = tileRecycler.getDisplayName().getUnformattedText();
+		fontRenderer.drawString(name, xSize / 2 - fontRenderer.getStringWidth(name) / 2, 6, 4210752);
 		fontRenderer.drawString(playerInventory.getDisplayName().getUnformattedText(), 8, ySize - 96 + 2, 4210752);
 	}
 

@@ -7,7 +7,6 @@ import ru.d78boga.mahabre.inits.MEntities;
 import ru.d78boga.mahabre.inits.MItems;
 
 public class ClientProxy extends CommonProxy {
-    @Override
     public void preInit(FMLPreInitializationEvent event) {
         super.preInit(event);
         
