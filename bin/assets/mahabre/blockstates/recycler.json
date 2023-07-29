@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "mahabre:recycler" },
+        "facing=south": { "model": "mahabre:recycler", "y": 180 },
+        "facing=west":  { "model": "mahabre:recycler", "y": 270 },
+        "facing=east":  { "model": "mahabre:recycler", "y": 90 }
+    }
+}

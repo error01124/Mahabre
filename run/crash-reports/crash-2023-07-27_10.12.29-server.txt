@@ -1,0 +1,85 @@
+---- Minecraft Crash Report ----
+// My bad.
+
+Time: 7/27/23 10:12 AM
+Description: Exception generating new chunk
+
+java.lang.ArrayIndexOutOfBoundsException: 363
+	at ru.d78boga.mahabre.world.TerrainGeneratorMahabre.generateHeightmap(TerrainGeneratorMahabre.java:100)
+	at ru.d78boga.mahabre.world.TerrainGeneratorMahabre.generate(TerrainGeneratorMahabre.java:178)
+	at ru.d78boga.mahabre.world.ChunkGeneratorMahabre.generateChunk(ChunkGeneratorMahabre.java:42)
+	at net.minecraft.world.gen.ChunkProviderServer.provideChunk(ChunkProviderServer.java:155)
+	at net.minecraft.server.management.PlayerChunkMapEntry.providePlayerChunk(PlayerChunkMapEntry.java:130)
+	at net.minecraft.server.management.PlayerChunkMap.tick(PlayerChunkMap.java:183)
+	at net.minecraft.world.WorldServer.tick(WorldServer.java:235)
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:825)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:740)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:192)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:589)
+	at java.lang.Thread.run(Unknown Source)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Server thread
+Stacktrace:
+	at ru.d78boga.mahabre.world.TerrainGeneratorMahabre.generateHeightmap(TerrainGeneratorMahabre.java:100)
+	at ru.d78boga.mahabre.world.TerrainGeneratorMahabre.generate(TerrainGeneratorMahabre.java:178)
+	at ru.d78boga.mahabre.world.ChunkGeneratorMahabre.generateChunk(ChunkGeneratorMahabre.java:42)
+
+-- Chunk to be generated --
+Details:
+	Location: -81,-280
+	Position hash: -1198295875665
+	Generator: ru.d78boga.mahabre.world.ChunkGeneratorMahabre@4a94f1b9
+Stacktrace:
+	at net.minecraft.world.gen.ChunkProviderServer.provideChunk(ChunkProviderServer.java:155)
+	at net.minecraft.server.management.PlayerChunkMapEntry.providePlayerChunk(PlayerChunkMapEntry.java:130)
+	at net.minecraft.server.management.PlayerChunkMap.tick(PlayerChunkMap.java:183)
+	at net.minecraft.world.WorldServer.tick(WorldServer.java:235)
+
+-- Affected level --
+Details:
+	Level name: Новый мир
+	All players: 1 total; [EntityPlayerMP['Player770'/206, l='Новый мир', x=-1101.45, y=123.10, z=-4273.48]]
+	Chunk stats: ServerChunkCache: 44 Drop: 0
+	Level seed: -464142950511016777
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: World: (0,0,0), Chunk: (at 0,0,0 in 0,0; contains blocks 0,0,0 to 15,255,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 0 game time, 0 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: ~~ERROR~~ NullPointerException: null
+Stacktrace:
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:825)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:740)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:192)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:589)
+	at java.lang.Thread.run(Unknown Source)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.12
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 1.8.0_371, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 343345896 bytes (327 MB) / 1523580928 bytes (1453 MB) up to 3750756352 bytes (3577 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 12, tcache: 78, allocated: 0, tallocated: 16
+	FML: MCP 9.40 Powered by Forge 14.21.1.2443 5 mods loaded, 5 mods active
+	States: 'U' = Unloaded 'L' = Loaded 'C' = Constructed 'H' = Pre-initialized 'I' = Initialized 'J' = Post-initialized 'A' = Available 'D' = Disabled 'E' = Errored
+	UCHIJAAAA	minecraft{1.12} [Minecraft] (minecraft.jar) 
+	UCHIJAAAA	mcp{9.19} [Minecraft Coder Pack] (minecraft.jar) 
+	UCHIJAAAA	FML{8.0.99.99} [Forge Mod Loader] (forgeSrc-1.12-14.21.1.2443.jar) 
+	UCHIJAAAA	forge{14.21.1.2443} [Minecraft Forge] (forgeSrc-1.12-14.21.1.2443.jar) 
+	UCHIJAAAA	mahabre{1.0} [Mahabre] (bin) 
+	Loaded coremods (and transformers): 
+	GL info: ~~ERROR~~ RuntimeException: No OpenGL context found in the current thread.
+	Profiler Position: N/A (disabled)
+	Player Count: 1 / 8; [EntityPlayerMP['Player770'/206, l='Новый мир', x=-1101.45, y=123.10, z=-4273.48]]
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'fml,forge'

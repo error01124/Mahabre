@@ -1,0 +1,12 @@
+tile.construction_debris.name=Construction debris
+tile.garbage_laying.name=Garbage laying
+tile.recycler.name=Recycler
+tile.resource_laying.name=Resource laying
+
+item.gas_mask.name=Gas mask
+
+itemGroup.mahabre=Mahabre
+
+container.recycler=Recycler
+
+entity.batu.name=Batu

@@ -1,0 +1,124 @@
+[22:17:04] [main/INFO]: Setting user: Player667
+[22:17:09] [main/WARN]: Skipping bad option: lastServer:
+[22:17:10] [main/INFO]: LWJGL Version: 2.9.4
+[22:17:13] [main/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Mahabre
+[22:17:17] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[22:17:18] [Thread-5/INFO]: Initializing LWJGL OpenAL
+[22:17:18] [Thread-5/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[22:17:18] [Thread-5/INFO]: OpenAL initialized.
+[22:17:18] [Sound Library Loader/INFO]: Sound engine started
+[22:17:24] [main/INFO]: Created: 512x512 textures-atlas
+[22:17:27] [main/WARN]: Skipping bad option: lastServer:
+[22:17:27] [main/INFO]: Narrator library for x64 successfully loaded
+[22:17:29] [Realms Notification Availability checker #1/INFO]: Could not authorize you against Realms server: Invalid session id
+[22:18:35] [Server thread/INFO]: Starting integrated minecraft server version 1.12
+[22:18:35] [Server thread/INFO]: Generating keypair
+[22:18:36] [Server thread/INFO]: Loaded 488 advancements
+[22:18:37] [Server thread/INFO]: Preparing start region for level 0
+[22:18:38] [Server thread/INFO]: Preparing spawn area: 8%
+[22:18:39] [Server thread/INFO]: Preparing spawn area: 18%
+[22:18:40] [Server thread/INFO]: Preparing spawn area: 27%
+[22:18:41] [Server thread/INFO]: Preparing spawn area: 39%
+[22:18:42] [Server thread/INFO]: Preparing spawn area: 48%
+[22:18:43] [Server thread/INFO]: Preparing spawn area: 49%
+[22:18:44] [Server thread/INFO]: Preparing spawn area: 61%
+[22:18:45] [Server thread/INFO]: Preparing spawn area: 76%
+[22:18:46] [Server thread/INFO]: Preparing spawn area: 87%
+[22:18:47] [Server thread/INFO]: Changing view distance to 12, from 10
+[22:18:49] [Server thread/INFO]: Player667[local:E:b2988c5a] logged in with entity id 1523 at (-94.5, 66.0, 201.5)
+[22:18:49] [Server thread/INFO]: Player667 присоединился к игре
+[22:18:52] [Server thread/WARN]: Can't keep up! Did the system time change, or is the server overloaded? Running 3700ms behind, skipping 74 tick(s)
+[22:18:59] [Server thread/FATAL]: Error executing task
+java.util.concurrent.ExecutionException: net.minecraft.util.ReportedException: Invalid Biome id
+	at java.util.concurrent.FutureTask.report(Unknown Source) ~[?:1.8.0_371]
+	at java.util.concurrent.FutureTask.get(Unknown Source) ~[?:1.8.0_371]
+	at net.minecraft.util.Util.runTask(Util.java:54) [Util.class:?]
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:795) [MinecraftServer.class:?]
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:740) [MinecraftServer.class:?]
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:192) [IntegratedServer.class:?]
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:589) [MinecraftServer.class:?]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_371]
+Caused by: net.minecraft.util.ReportedException: Invalid Biome id
+	at net.minecraft.world.gen.ChunkProviderServer.provideChunk(ChunkProviderServer.java:164) ~[ChunkProviderServer.class:?]
+	at net.minecraft.world.World.getChunkFromChunkCoords(World.java:360) ~[World.class:?]
+	at net.minecraft.world.World.getChunkFromBlockCoords(World.java:352) ~[World.class:?]
+	at net.minecraft.world.World.getBlockState(World.java:990) ~[World.class:?]
+	at ru.d78boga.mahabre.world.mTeleporter.placeInPortal(mTeleporter.java:25) ~[mTeleporter.class:?]
+	at net.minecraft.server.management.PlayerList.transferEntityToWorld(PlayerList.java:748) ~[PlayerList.class:?]
+	at net.minecraft.server.management.PlayerList.transferPlayerToDimension(PlayerList.java:655) ~[PlayerList.class:?]
+	at ru.d78boga.mahabre.item.Teleporter.changeDimension(Teleporter.java:41) ~[Teleporter.class:?]
+	at ru.d78boga.mahabre.item.Teleporter.onItemUse(Teleporter.java:29) ~[Teleporter.class:?]
+	at net.minecraftforge.common.ForgeHooks.onPlaceItemIntoWorld(ForgeHooks.java:836) ~[ForgeHooks.class:?]
+	at net.minecraft.item.ItemStack.onItemUse(ItemStack.java:200) ~[ItemStack.class:?]
+	at net.minecraft.server.management.PlayerInteractionManager.processRightClickBlock(PlayerInteractionManager.java:504) ~[PlayerInteractionManager.class:?]
+	at net.minecraft.network.NetHandlerPlayServer.processTryUseItemOnBlock(NetHandlerPlayServer.java:757) ~[NetHandlerPlayServer.class:?]
+	at net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock.processPacket(CPacketPlayerTryUseItemOnBlock.java:68) ~[CPacketPlayerTryUseItemOnBlock.class:?]
+	at net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock.processPacket(CPacketPlayerTryUseItemOnBlock.java:13) ~[CPacketPlayerTryUseItemOnBlock.class:?]
+	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:21) ~[PacketThreadUtil$1.class:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source) ~[?:1.8.0_371]
+	at java.util.concurrent.FutureTask.run(Unknown Source) ~[?:1.8.0_371]
+	at net.minecraft.util.Util.runTask(Util.java:53) ~[Util.class:?]
+	... 5 more
+Caused by: java.lang.Error
+	at ru.d78boga.mahabre.world.biome.BiomeProviderMahabre.getBiomesForGeneration(BiomeProviderMahabre.java:54) ~[BiomeProviderMahabre.class:?]
+	at ru.d78boga.mahabre.world.ChunkGeneratorMahabre.generateChunk(ChunkGeneratorMahabre.java:48) ~[ChunkGeneratorMahabre.class:?]
+	at net.minecraft.world.gen.ChunkProviderServer.provideChunk(ChunkProviderServer.java:155) ~[ChunkProviderServer.class:?]
+	at net.minecraft.world.World.getChunkFromChunkCoords(World.java:360) ~[World.class:?]
+	at net.minecraft.world.World.getChunkFromBlockCoords(World.java:352) ~[World.class:?]
+	at net.minecraft.world.World.getBlockState(World.java:990) ~[World.class:?]
+	at ru.d78boga.mahabre.world.mTeleporter.placeInPortal(mTeleporter.java:25) ~[mTeleporter.class:?]
+	at net.minecraft.server.management.PlayerList.transferEntityToWorld(PlayerList.java:748) ~[PlayerList.class:?]
+	at net.minecraft.server.management.PlayerList.transferPlayerToDimension(PlayerList.java:655) ~[PlayerList.class:?]
+	at ru.d78boga.mahabre.item.Teleporter.changeDimension(Teleporter.java:41) ~[Teleporter.class:?]
+	at ru.d78boga.mahabre.item.Teleporter.onItemUse(Teleporter.java:29) ~[Teleporter.class:?]
+	at net.minecraftforge.common.ForgeHooks.onPlaceItemIntoWorld(ForgeHooks.java:836) ~[ForgeHooks.class:?]
+	at net.minecraft.item.ItemStack.onItemUse(ItemStack.java:200) ~[ItemStack.class:?]
+	at net.minecraft.server.management.PlayerInteractionManager.processRightClickBlock(PlayerInteractionManager.java:504) ~[PlayerInteractionManager.class:?]
+	at net.minecraft.network.NetHandlerPlayServer.processTryUseItemOnBlock(NetHandlerPlayServer.java:757) ~[NetHandlerPlayServer.class:?]
+	at net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock.processPacket(CPacketPlayerTryUseItemOnBlock.java:68) ~[CPacketPlayerTryUseItemOnBlock.class:?]
+	at net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock.processPacket(CPacketPlayerTryUseItemOnBlock.java:13) ~[CPacketPlayerTryUseItemOnBlock.class:?]
+	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:21) ~[PacketThreadUtil$1.class:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source) ~[?:1.8.0_371]
+	at java.util.concurrent.FutureTask.run(Unknown Source) ~[?:1.8.0_371]
+	at net.minecraft.util.Util.runTask(Util.java:53) ~[Util.class:?]
+	... 5 more
+[22:18:59] [Server thread/FATAL]: Error executing task
+java.util.concurrent.ExecutionException: net.minecraft.util.ReportedException: Invalid Biome id
+	at java.util.concurrent.FutureTask.report(Unknown Source) ~[?:1.8.0_371]
+	at java.util.concurrent.FutureTask.get(Unknown Source) ~[?:1.8.0_371]
+	at net.minecraft.util.Util.runTask(Util.java:54) [Util.class:?]
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:795) [MinecraftServer.class:?]
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:740) [MinecraftServer.class:?]
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:192) [IntegratedServer.class:?]
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:589) [MinecraftServer.class:?]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_371]
+Caused by: net.minecraft.util.ReportedException: Invalid Biome id
+	at net.minecraft.world.gen.ChunkProviderServer.provideChunk(ChunkProviderServer.java:164) ~[ChunkProviderServer.class:?]
+	at net.minecraft.world.World.getChunkFromChunkCoords(World.java:360) ~[World.class:?]
+	at net.minecraft.world.World.getChunkFromBlockCoords(World.java:352) ~[World.class:?]
+	at net.minecraft.world.World.getBlockState(World.java:990) ~[World.class:?]
+	at net.minecraft.server.management.PlayerInteractionManager.processRightClickBlock(PlayerInteractionManager.java:470) ~[PlayerInteractionManager.class:?]
+	at net.minecraft.network.NetHandlerPlayServer.processTryUseItemOnBlock(NetHandlerPlayServer.java:757) ~[NetHandlerPlayServer.class:?]
+	at net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock.processPacket(CPacketPlayerTryUseItemOnBlock.java:68) ~[CPacketPlayerTryUseItemOnBlock.class:?]
+	at net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock.processPacket(CPacketPlayerTryUseItemOnBlock.java:13) ~[CPacketPlayerTryUseItemOnBlock.class:?]
+	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:21) ~[PacketThreadUtil$1.class:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source) ~[?:1.8.0_371]
+	at java.util.concurrent.FutureTask.run(Unknown Source) ~[?:1.8.0_371]
+	at net.minecraft.util.Util.runTask(Util.java:53) ~[Util.class:?]
+	... 5 more
+Caused by: java.lang.Error
+	at ru.d78boga.mahabre.world.biome.BiomeProviderMahabre.getBiomesForGeneration(BiomeProviderMahabre.java:54) ~[BiomeProviderMahabre.class:?]
+	at ru.d78boga.mahabre.world.ChunkGeneratorMahabre.generateChunk(ChunkGeneratorMahabre.java:48) ~[ChunkGeneratorMahabre.class:?]
+	at net.minecraft.world.gen.ChunkProviderServer.provideChunk(ChunkProviderServer.java:155) ~[ChunkProviderServer.class:?]
+	at net.minecraft.world.World.getChunkFromChunkCoords(World.java:360) ~[World.class:?]
+	at net.minecraft.world.World.getChunkFromBlockCoords(World.java:352) ~[World.class:?]
+	at net.minecraft.world.World.getBlockState(World.java:990) ~[World.class:?]
+	at net.minecraft.server.management.PlayerInteractionManager.processRightClickBlock(PlayerInteractionManager.java:470) ~[PlayerInteractionManager.class:?]
+	at net.minecraft.network.NetHandlerPlayServer.processTryUseItemOnBlock(NetHandlerPlayServer.java:757) ~[NetHandlerPlayServer.class:?]
+	at net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock.processPacket(CPacketPlayerTryUseItemOnBlock.java:68) ~[CPacketPlayerTryUseItemOnBlock.class:?]
+	at net.minecraft.network.play.client.CPacketPlayerTryUseItemOnBlock.processPacket(CPacketPlayerTryUseItemOnBlock.java:13) ~[CPacketPlayerTryUseItemOnBlock.class:?]
+	at net.minecraft.network.PacketThreadUtil$1.run(PacketThreadUtil.java:21) ~[PacketThreadUtil$1.class:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Unknown Source) ~[?:1.8.0_371]
+	at java.util.concurrent.FutureTask.run(Unknown Source) ~[?:1.8.0_371]
+	at net.minecraft.util.Util.runTask(Util.java:53) ~[Util.class:?]
+	... 5 more

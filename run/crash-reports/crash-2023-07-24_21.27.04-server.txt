@@ -1,0 +1,102 @@
+---- Minecraft Crash Report ----
+// Shall we play a game?
+
+Time: 7/24/23 9:27 PM
+Description: Exception generating new chunk
+
+java.lang.Error: Unresolved compilation problems: 
+	Syntax error, insert "VariableDeclarators" to complete LocalVariableDeclaration
+	Syntax error, insert ";" to complete LocalVariableDeclarationStatement
+
+	at ru.d78boga.mahabre.world.biome.BiomeProviderMahabre.getBiome(BiomeProviderMahabre.java:40)
+	at net.minecraft.world.World.getBiomeForCoordsBody(World.java:212)
+	at net.minecraft.world.WorldProvider.getBiomeForCoords(WorldProvider.java:413)
+	at net.minecraft.world.World.getBiome(World.java:183)
+	at ru.d78boga.mahabre.world.feature.MapGenMahabreCaves.isTopBlock(MapGenMahabreCaves.java:216)
+	at ru.d78boga.mahabre.world.feature.MapGenMahabreCaves.addTunnel(MapGenMahabreCaves.java:159)
+	at ru.d78boga.mahabre.world.feature.MapGenMahabreCaves.addTunnel(MapGenMahabreCaves.java:70)
+	at ru.d78boga.mahabre.world.feature.MapGenMahabreCaves.recursiveGenerate(MapGenMahabreCaves.java:205)
+	at net.minecraft.world.gen.MapGenBase.generate(MapGenBase.java:31)
+	at ru.d78boga.mahabre.world.ChunkGeneratorMahabre.generateChunk(ChunkGeneratorMahabre.java:51)
+	at net.minecraft.world.gen.ChunkProviderServer.provideChunk(ChunkProviderServer.java:155)
+	at net.minecraft.server.management.PlayerChunkMapEntry.providePlayerChunk(PlayerChunkMapEntry.java:130)
+	at net.minecraft.server.management.PlayerChunkMap.tick(PlayerChunkMap.java:183)
+	at net.minecraft.world.WorldServer.tick(WorldServer.java:235)
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:825)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:740)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:192)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:589)
+	at java.lang.Thread.run(Unknown Source)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Server thread
+Stacktrace:
+	at ru.d78boga.mahabre.world.biome.BiomeProviderMahabre.getBiome(BiomeProviderMahabre.java:40)
+	at net.minecraft.world.World.getBiomeForCoordsBody(World.java:212)
+	at net.minecraft.world.WorldProvider.getBiomeForCoords(WorldProvider.java:413)
+	at net.minecraft.world.World.getBiome(World.java:183)
+	at ru.d78boga.mahabre.world.feature.MapGenMahabreCaves.isTopBlock(MapGenMahabreCaves.java:216)
+	at ru.d78boga.mahabre.world.feature.MapGenMahabreCaves.addTunnel(MapGenMahabreCaves.java:159)
+	at ru.d78boga.mahabre.world.feature.MapGenMahabreCaves.addTunnel(MapGenMahabreCaves.java:70)
+	at ru.d78boga.mahabre.world.feature.MapGenMahabreCaves.recursiveGenerate(MapGenMahabreCaves.java:205)
+	at net.minecraft.world.gen.MapGenBase.generate(MapGenBase.java:31)
+	at ru.d78boga.mahabre.world.ChunkGeneratorMahabre.generateChunk(ChunkGeneratorMahabre.java:51)
+
+-- Chunk to be generated --
+Details:
+	Location: -25,-17
+	Position hash: -68719476761
+	Generator: ru.d78boga.mahabre.world.ChunkGeneratorMahabre@4b59df94
+Stacktrace:
+	at net.minecraft.world.gen.ChunkProviderServer.provideChunk(ChunkProviderServer.java:155)
+	at net.minecraft.server.management.PlayerChunkMapEntry.providePlayerChunk(PlayerChunkMapEntry.java:130)
+	at net.minecraft.server.management.PlayerChunkMap.tick(PlayerChunkMap.java:183)
+	at net.minecraft.world.WorldServer.tick(WorldServer.java:235)
+
+-- Affected level --
+Details:
+	Level name: Новый мир
+	All players: 1 total; [EntityPlayerMP['Player603'/2684, l='Новый мир', x=-207.00, y=69.00, z=-74.00]]
+	Chunk stats: ServerChunkCache: 1 Drop: 0
+	Level seed: 5042909324030057900
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: 
+	Level spawn location: World: (0,0,0), Chunk: (at 0,0,0 in 0,0; contains blocks 0,0,0 to 15,255,15), Region: (0,0; contains chunks 0,0 to 31,31, blocks 0,0,0 to 511,255,511)
+	Level time: 0 game time, 0 day time
+	Level dimension: 0
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: ~~ERROR~~ NullPointerException: null
+Stacktrace:
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:825)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:740)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:192)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:589)
+	at java.lang.Thread.run(Unknown Source)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.12
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 1.8.0_371, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 443635592 bytes (423 MB) / 1566572544 bytes (1494 MB) up to 3750756352 bytes (3577 MB)
+	JVM Flags: 0 total; 
+	IntCache: cache: 7, tcache: 75, allocated: 1, tallocated: 15
+	FML: MCP 9.40 Powered by Forge 14.21.1.2443 5 mods loaded, 5 mods active
+	States: 'U' = Unloaded 'L' = Loaded 'C' = Constructed 'H' = Pre-initialized 'I' = Initialized 'J' = Post-initialized 'A' = Available 'D' = Disabled 'E' = Errored
+	UCHIJAAAA	minecraft{1.12} [Minecraft] (minecraft.jar) 
+	UCHIJAAAA	mcp{9.19} [Minecraft Coder Pack] (minecraft.jar) 
+	UCHIJAAAA	FML{8.0.99.99} [Forge Mod Loader] (forgeSrc-1.12-14.21.1.2443.jar) 
+	UCHIJAAAA	forge{14.21.1.2443} [Minecraft Forge] (forgeSrc-1.12-14.21.1.2443.jar) 
+	UCHIJAAAA	mahabre{1.0} [Mahabre] (bin) 
+	Loaded coremods (and transformers): 
+	GL info: ~~ERROR~~ RuntimeException: No OpenGL context found in the current thread.
+	Profiler Position: N/A (disabled)
+	Player Count: 1 / 8; [EntityPlayerMP['Player603'/2684, l='Новый мир', x=-207.00, y=69.00, z=-74.00]]
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'fml,forge'
