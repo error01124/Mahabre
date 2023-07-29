@@ -1,7 +1,0 @@
-[{
-  "modid": "singer",
-  "name": "Singer",
-  "description": "Singer",
-  "version": "${version}",
-  "mcversion": "${mcversion}"
-}]
