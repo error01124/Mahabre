@@ -15,26 +15,26 @@ import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 import net.minecraft.world.storage.WorldInfo;
-import ru.d78boga.mahabre.inits.mBiomes;
-import ru.d78boga.mahabre.world.layer.GenLayerMahabre;
+import ru.d78boga.mahabre.inits.MBiomes;
+import ru.d78boga.mahabre.world.gen.layer.GenLayerMahabre;
 
 public class BiomeProviderMahabre extends BiomeProvider {
 	private GenLayer genBiomes;
 	private GenLayer biomeIndexLayer;
-	private mBiomeCache biomeCache;
+	private MBiomeCache biomeCache;
 
 	public BiomeProviderMahabre(WorldInfo worldInfo) {
 		allowedBiomes.clear();
 		getBiomesToSpawnIn().clear();
 		long seed = worldInfo.getSeed();
-		biomeCache = new mBiomeCache(this);
+		biomeCache = new MBiomeCache(this);
 		GenLayer[] agenlayer = GenLayerMahabre.initializeAllBiomeGenerators(seed);
 		genBiomes = agenlayer[0];
 		biomeIndexLayer = agenlayer[1];
 	}
 	
 	public Biome getBiome(BlockPos pos, Biome defaultBiome) {
-		return biomeCache.getBiome(pos.getX(), pos.getZ(), mBiomes.MAHABRE_DESERT);
+		return biomeCache.getBiome(pos.getX(), pos.getZ(), MBiomes.MAHABRE_DESERT);
 	}
 
 	public Biome[] getBiomesForGeneration(Biome[] biomes, int x, int z, int width, int height) {
@@ -48,7 +48,7 @@ public class BiomeProviderMahabre extends BiomeProvider {
 
 		try {
 			for (int i = 0; i < width * height; ++i) {
-				biomes[i] = Biome.getBiome(aint[i], mBiomes.MAHABRE_DESERT);
+				biomes[i] = Biome.getBiome(aint[i], MBiomes.MAHABRE_DESERT);
 			}
 
 			return biomes;

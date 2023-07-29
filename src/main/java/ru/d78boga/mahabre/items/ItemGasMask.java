@@ -11,10 +11,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import ru.d78boga.mahabre.inits.mDimensions;
-import ru.d78boga.mahabre.world.mTeleporter;
+import ru.d78boga.mahabre.inits.MDimensions;
+import ru.d78boga.mahabre.world.MTeleporter;
 
-public class ItemGasMask extends mItem {
+public class ItemGasMask extends MItem {
 	public ItemGasMask() {
 		super("gas_mask");
 		maxStackSize = 1;
@@ -23,7 +23,7 @@ public class ItemGasMask extends mItem {
 
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!player.isRiding() && !player.isBeingRidden() && !worldIn.isRemote) {
-			int mahabre = mDimensions.MAHABRE.getId();
+			int mahabre = MDimensions.MAHABRE.getId();
 			int overworld = 0;
 			int transferDimension = player.dimension == mahabre ? overworld : mahabre;
 
@@ -43,6 +43,6 @@ public class ItemGasMask extends mItem {
 		MinecraftServer mcServer = player.mcServer;
 		PlayerList playerList = mcServer.getPlayerList();
 		WorldServer world = mcServer.getWorld(dimensionIn);
-		playerList.transferPlayerToDimension(player, dimensionIn, new mTeleporter(world));
+		playerList.transferPlayerToDimension(player, dimensionIn, new MTeleporter(world));
 	}
 }

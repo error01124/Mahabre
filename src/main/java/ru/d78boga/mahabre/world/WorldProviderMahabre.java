@@ -9,8 +9,9 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import ru.d78boga.mahabre.inits.mDimensions;
+import ru.d78boga.mahabre.inits.MDimensions;
 import ru.d78boga.mahabre.world.biome.BiomeProviderMahabre;
+import ru.d78boga.mahabre.world.gen.ChunkGeneratorMahabre;
 
 public class WorldProviderMahabre extends WorldProvider {
 	public void init() {
@@ -64,7 +65,7 @@ public class WorldProviderMahabre extends WorldProvider {
     }
     
     public DimensionType getDimensionType() {
-        return mDimensions.MAHABRE;
+        return MDimensions.MAHABRE;
     }
 
     public String getSaveFolder() {

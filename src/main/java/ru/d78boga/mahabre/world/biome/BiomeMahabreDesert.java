@@ -11,14 +11,14 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.WorldGenBlockBlob;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
-import ru.d78boga.mahabre.mMath;
-import ru.d78boga.mahabre.world.OresInfoMahabre;
-import ru.d78boga.mahabre.world.layer.mOreInfo;
+import ru.d78boga.mahabre.util.MathUtil;
+import ru.d78boga.mahabre.world.gen.map.MOreInfo;
+import ru.d78boga.mahabre.world.gen.map.MahabreOresInfo;
 
-public class BiomeMahabreDesert extends mBiome {
+public class BiomeMahabreDesert extends MBiome {
 	private Type type;
-	private mBiomeDecorator decorator1;
-	private static WorldGenBlockBlob rockGenerator = new WorldGenBlockBlob(Blocks.COBBLESTONE, 0);
+	private MBiomeDecorator decorator;
+	private WorldGenBlockBlob rockGenerator;
 	
 	public BiomeMahabreDesert(BiomeProperties properties) {
 		super(properties);
@@ -27,15 +27,15 @@ public class BiomeMahabreDesert extends mBiome {
 		spawnableCreatureList.clear();
 		topBlock = Blocks.SAND.getDefaultState();
 		fillerBlock = Blocks.SAND.getDefaultState();
-		decorator1 = new mBiomeDecorator();
-		decorator1.treesPerChunk = -999;
-		decorator1.deadBushPerChunk = 0;
-		decorator1.reedsPerChunk = 0;
-		decorator1.cactiPerChunk = 0;
-		decorator1.mushroomsPerChunk = 0;
-		OresInfoMahabre oresInfo = new OresInfoMahabre();
-		List<mOreInfo> ores = oresInfo.list;
-		decorator1.oresInfo = ores;
+		decorator = new MBiomeDecorator();
+		decorator.treesPerChunk = -999;
+		decorator.deadBushPerChunk = 0;
+		decorator.reedsPerChunk = 0;
+		decorator.cactiPerChunk = 0;
+		decorator.mushroomsPerChunk = 0;
+		List<MOreInfo> oresInfo = new MahabreOresInfo().list;
+		decorator.oresInfo = oresInfo;
+		rockGenerator = new WorldGenBlockBlob(Blocks.COBBLESTONE, 0);
 	}
 
 	public BiomeMahabreDesert(BiomeProperties properties, Type type) {
@@ -44,7 +44,7 @@ public class BiomeMahabreDesert extends mBiome {
 	}
 
 	public BiomeDecorator createBiomeDecorator() {
-		return new mBiomeDecorator();
+		return new MBiomeDecorator();
 	}
 
 	public void decorate(World worldIn, Random rand, BlockPos pos) {
@@ -59,7 +59,7 @@ public class BiomeMahabreDesert extends mBiome {
 			}
 		}
 
-		decorator1.decorate(worldIn, rand, this, pos);
+		decorator.decorate(worldIn, rand, this, pos);
 	}
 
 	public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
@@ -68,7 +68,7 @@ public class BiomeMahabreDesert extends mBiome {
 			fillerBlock = Blocks.SANDSTONE.getDefaultState();
 
 			if (noiseVal > 1.75D) {
-				if (mMath.roll(5))
+				if (MathUtil.roll(5))
 					topBlock = Blocks.STONE.getDefaultState();
 			}
 		}
@@ -76,7 +76,8 @@ public class BiomeMahabreDesert extends mBiome {
 		generateBiomeTerrain(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
 	}
 
-	public static enum Type {
-		NORMAL, ROCKY;
+	public enum Type {
+		NORMAL,
+		ROCKY;
 	}
 }

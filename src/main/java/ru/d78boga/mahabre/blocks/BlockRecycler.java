@@ -28,10 +28,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import ru.d78boga.mahabre.Mahabre;
-import ru.d78boga.mahabre.inits.mBlocks;
+import ru.d78boga.mahabre.inits.MBlocks;
 import ru.d78boga.mahabre.tileentities.TileEntityRecycler;
 
-public class BlockRecycler extends mBlockContainer {
+public class BlockRecycler extends MBlockContainer {
 	public static PropertyDirection FACING = BlockHorizontal.FACING;
 	private boolean isWorking;
 	private static boolean keepInventory;
@@ -123,11 +123,11 @@ public class BlockRecycler extends mBlockContainer {
 		keepInventory = true;
 
 		if (active) {
-			worldIn.setBlockState(pos, mBlocks.RECYCLER.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-			worldIn.setBlockState(pos, mBlocks.RECYCLER.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+			worldIn.setBlockState(pos, MBlocks.RECYCLER.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+			worldIn.setBlockState(pos, MBlocks.RECYCLER.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
 		} else {
-			worldIn.setBlockState(pos, mBlocks.RECYCLER.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-			worldIn.setBlockState(pos, mBlocks.RECYCLER.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+			worldIn.setBlockState(pos, MBlocks.RECYCLER.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
+			worldIn.setBlockState(pos, MBlocks.RECYCLER.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
 		}
 
 		keepInventory = false;

@@ -12,7 +12,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import ru.d78boga.mahabre.inits.mBlocks;
+import ru.d78boga.mahabre.inits.MBlocks;
 
 public class RecyclerRecipes {
 	public static RecyclerRecipes INSTANCE = new RecyclerRecipes();
@@ -21,15 +21,15 @@ public class RecyclerRecipes {
 
 	private RecyclerRecipes() {
 		rand = new Random();
-		addRecyclingRecipe(mBlocks.CONSTRUCTION_DEBRIS,
+		addRecyclingRecipe(MBlocks.CONSTRUCTION_DEBRIS,
 			collect(cast(Blocks.STONEBRICK, 3)),
 			collect(cast(Blocks.STONE, 3)),
 			collect(cast(Blocks.GRAVEL, 2)));
-		addRecyclingRecipe(mBlocks.GARBAGE_LAYING,
+		addRecyclingRecipe(MBlocks.GARBAGE_LAYING,
 		    collect(cast(Items.PAPER, 3)), 
 			collect(cast(Items.LEATHER, 2)),
 			collect(cast(Items.LEAD, 3)));
-		addRecyclingRecipe(mBlocks.RESOURCE_LAYING,
+		addRecyclingRecipe(MBlocks.RESOURCE_LAYING,
 			collect(cast(Items.DIAMOND, 1)), 
 			collect(cast(Items.EMERALD, 1)),																																																																																																			
 			collect(cast(Items.IRON_INGOT, 1)),		

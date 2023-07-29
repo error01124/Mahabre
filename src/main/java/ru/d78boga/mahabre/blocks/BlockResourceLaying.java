@@ -3,7 +3,7 @@ package ru.d78boga.mahabre.blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 
-public class BlockResourceLaying extends mBlock {
+public class BlockResourceLaying extends MBlock {
 	public BlockResourceLaying() {
 		super(Material.ROCK, "resource_laying");
         setHardness(3.0F);
