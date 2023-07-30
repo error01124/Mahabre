@@ -2,6 +2,7 @@ package ru.d78boga.mahabre.blocks;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

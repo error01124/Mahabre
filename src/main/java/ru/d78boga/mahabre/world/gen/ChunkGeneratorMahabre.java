@@ -18,7 +18,8 @@ import net.minecraftforge.event.terraingen.InitMapGenEvent.EventType;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import ru.d78boga.mahabre.world.gen.map.MapGenMahabreCaves;
 import ru.d78boga.mahabre.world.gen.structure.GenMahabreCity;
-import ru.d78boga.mahabre.world.gen.structure.MGenStructure;
+import ru.d78boga.mahabre.world.gen.structure.GenMahabrePost;
+import ru.d78boga.mahabre.world.gen.structure.MStructureProperties;
 import ru.d78boga.mahabre.world.gen.structure.MStructuresProvider;
 
 public class ChunkGeneratorMahabre implements IChunkGenerator {
@@ -29,7 +30,7 @@ public class ChunkGeneratorMahabre implements IChunkGenerator {
 	private TerrainGenMahabre terraingen = new TerrainGenMahabre();
 	private boolean generateStructures = true;
 	private MStructuresProvider structuresProvider;
-	private MGenStructure genCity;
+	private GenMahabreCity genCity;
 
 	public ChunkGeneratorMahabre(World world) {
 		this.world = world;
@@ -38,7 +39,8 @@ public class ChunkGeneratorMahabre implements IChunkGenerator {
 		terraingen.setup(world, random);
 		caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, EventType.CAVE);
 		structuresProvider = new MStructuresProvider(world);
-		genCity = new GenMahabreCity(structuresProvider);
+		genCity = new GenMahabreCity(new MStructureProperties().setComplex(10), structuresProvider);
+		GenMahabrePost genPost = new GenMahabrePost(new MStructureProperties(), genCity);
 	}
 
 	public Chunk generateChunk(int x, int z) {
@@ -93,7 +95,9 @@ public class ChunkGeneratorMahabre implements IChunkGenerator {
 	}
 
 	public void recreateStructures(Chunk chunkIn, int x, int z) {
-		genCity.generate(world, random, x, z);
+		if (generateStructures) {
+			genCity.generate(world, random, x, z);
+		}
 	}
 
 	public BlockPos getNearestStructurePos(World worldIn, String structureName, BlockPos position, boolean findUnexplored) {

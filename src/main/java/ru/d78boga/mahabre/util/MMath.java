@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec2f;
 
-public class MathUtil {
+public class MMath {
 	private static Random rand = new Random();
 	
 	public static float distance(Vec2f vec2) {
@@ -23,6 +23,7 @@ public class MathUtil {
 	}
 	
 	public static boolean roll(int antichance) {
+		rand.setSeed(rand.nextLong());
 		return rand.nextInt(antichance) == 0;
 	}
 }

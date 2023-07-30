@@ -11,7 +11,7 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.feature.WorldGenBlockBlob;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
-import ru.d78boga.mahabre.util.MathUtil;
+import ru.d78boga.mahabre.util.MMath;
 import ru.d78boga.mahabre.world.gen.map.MOreInfo;
 import ru.d78boga.mahabre.world.gen.map.MahabreOresInfo;
 
@@ -68,7 +68,7 @@ public class BiomeMahabreDesert extends MBiome {
 			fillerBlock = Blocks.SANDSTONE.getDefaultState();
 
 			if (noiseVal > 1.75D) {
-				if (MathUtil.roll(5))
+				if (MMath.roll(5))
 					topBlock = Blocks.STONE.getDefaultState();
 			}
 		}

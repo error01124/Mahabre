@@ -1,21 +1,32 @@
 package ru.d78boga.mahabre.tileentities;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import ru.d78boga.mahabre.blocks.BlockRecycler;
 import ru.d78boga.mahabre.inventory.ContainerRecycler;
 import ru.d78boga.mahabre.recipes.RecyclerRecipes;
 
-public class TileEntityRecycler extends TileEntityLockable implements ITickable {
+public class TileEntityRecycler extends TileEntityLockable implements ITickable, ISidedInventory {
+	private int[] slotsBottom = new int[] { 1, 2, 3, 4, 5, 6 };
+	private int[] slotsSides = new int[] { 0 };
 	private NonNullList<ItemStack> itemStacks = NonNullList.<ItemStack>withSize(7, ItemStack.EMPTY);
 	private int recycleTime;
 	private int totalRecycleTime;
@@ -63,10 +74,6 @@ public class TileEntityRecycler extends TileEntityLockable implements ITickable 
 	}
 
 	public boolean hasCustomName() {
-		return false;
-	}
-
-	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
 		return false;
 	}
 
@@ -141,7 +148,8 @@ public class TileEntityRecycler extends TileEntityLockable implements ITickable 
 			}
 
 			for (ItemStack recipeStack : recipeStacks) {
-				if (!merge(recipeStack)) return false;
+				if (!merge(recipeStack))
+					return false;
 			}
 
 			return true;
@@ -188,6 +196,14 @@ public class TileEntityRecycler extends TileEntityLockable implements ITickable 
 		}
 	}
 
+	public int[] getSlotsForFace(EnumFacing side) {
+		if (side == EnumFacing.DOWN) {
+			return slotsBottom;
+		} else {
+			return slotsSides;
+		}
+	}
+
 	public void openInventory(EntityPlayer player) {
 	}
 
@@ -200,6 +216,10 @@ public class TileEntityRecycler extends TileEntityLockable implements ITickable 
 
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
 		return isItemValidForSlot(index, itemStackIn);
+	}
+	
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+		return true;
 	}
 
 	public int getField(int id) {
@@ -237,5 +257,21 @@ public class TileEntityRecycler extends TileEntityLockable implements ITickable 
 
 	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
 		return new ContainerRecycler(playerInventory, this);
+	}
+
+	private IItemHandler handlerSide = new SidedInvWrapper(this, EnumFacing.UP);
+	private IItemHandler handlerBottom = new SidedInvWrapper(this, EnumFacing.DOWN);
+
+	@SuppressWarnings("unchecked")
+	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+		if (facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {			
+			if (facing == EnumFacing.DOWN) {
+				return (T) handlerBottom;
+			} else {
+				return (T) handlerSide;
+			}
+		}
+
+		return super.getCapability(capability, facing);
 	}
 }

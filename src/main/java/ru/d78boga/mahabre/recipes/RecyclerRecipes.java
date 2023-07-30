@@ -28,7 +28,7 @@ public class RecyclerRecipes {
 		addRecyclingRecipe(MBlocks.GARBAGE_LAYING,
 		    collect(cast(Items.PAPER, 3)), 
 			collect(cast(Items.LEATHER, 2)),
-			collect(cast(Items.LEAD, 3)));
+			collect(cast(Items.STRING, 3)));
 		addRecyclingRecipe(MBlocks.RESOURCE_LAYING,
 			collect(cast(Items.DIAMOND, 1)), 
 			collect(cast(Items.EMERALD, 1)),																																																																																																			

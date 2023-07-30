@@ -2,23 +2,19 @@ package ru.d78boga.mahabre.world.gen.structure;
 
 import java.util.List;
 import java.util.Random;
+
 import com.google.common.collect.Lists;
+
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraft.world.gen.structure.template.PlacementSettings;
-import net.minecraft.world.gen.structure.template.Template;
 import net.minecraft.world.gen.structure.template.TemplateManager;
-import ru.d78boga.mahabre.util.Util;
-import ru.d78boga.mahabre.util.MathUtil;
+import ru.d78boga.mahabre.util.MMath;
 import ru.d78boga.mahabre.world.biome.MBiome;
 
 public abstract class MGenStructure extends WorldGenerator implements IStructure {
@@ -29,102 +25,69 @@ public abstract class MGenStructure extends WorldGenerator implements IStructure
 	protected Random rand = new Random();
 	protected World world;
 	protected WorldProvider worldProvider;
-	private MStructuresProvider provider;
-	private Template template;
-	private BlockPos templateSize;
-	private ResourceLocation lootLocation;
+	protected MinecraftServer mcServer;
+	protected TemplateManager manager;
+	protected MStructuresProvider provider;
+	protected boolean underground;
+	protected int minHeight = 0;
+	protected int maxHeight = 0;
 
-	public MGenStructure(String registryName, String name, MStructuresProvider provider) {
+	public MGenStructure(MStructureProperties properties, String registryName, String name, MStructuresProvider provider) {
 		this.registryName = registryName;
 		this.name = name;
 		this.provider = provider;
 		this.world = provider.world;
 		worldProvider = world.provider;
-		MinecraftServer mcServer = world.getMinecraftServer();
-		TemplateManager manager = worldServer.getStructureTemplateManager();
-		ResourceLocation location = Util.locate(registryName);
-		template = manager.get(mcServer, location);
-		templateSize = template.getSize();
-		lootLocation = Util.locate("chests/" + registryName);
+		mcServer = world.getMinecraftServer();
+		manager = worldServer.getStructureTemplateManager();
+		underground = properties.underground;
+		
+		if (underground) {			
+			minHeight = properties.minHeight;
+			maxHeight = properties.maxHeight;
+		}
 	}
 
 	public boolean generate(World worldIn, Random rand, int chunkX, int chunkZ) {
-		int x = chunkX * 16 + 8 + templateSize.getX() / 2;
-		int z = chunkZ * 16 + 8 + templateSize.getZ() / 2;
-		BlockPos pos = new BlockPos(x, 0, z);
+		BlockPos pos = calculateSpawnPosition(chunkX, chunkZ);
 		return generate(worldIn, rand, pos);
 	}
-	
+
 	public boolean generate(World worldIn, Random rand, BlockPos pos) {
 		if (!canSpawnStructureAtCoords(pos)) return false;
 
+		int x = pos.getX();
+		int z = pos.getZ();
+		int y = calculateGenerationHeight(x, z);
+		pos = new BlockPos(x, y, z);
 		generateStructure(worldIn, rand, pos);
 		return true;
 	}
 
-	private void generateStructure(World world, Random rand, BlockPos pos) {
-		if (template != null) {
-			if (!world.isRemote) {
-				pos = findFlatSurface(pos);
-				IBlockState state = world.getBlockState(pos);
-				world.notifyBlockUpdate(pos, state, state, 3);
-				template.addBlocksToWorldChunk(world, pos, new PlacementSettings());
-				generateLoot(pos);
-				provider.setStructure(pos, name);
-			}
-		}
+	protected BlockPos calculateSpawnPosition(int chunkX, int chunkZ) {
+		int x  = chunkX * 16;
+		int z = chunkZ * 16;
+		int y = 0; //calculateGenerationHeight(x, z);
+		return new BlockPos(x, y, z);
 	}
+	
+	protected abstract void generateStructure(World world, Random rand, BlockPos pos);
 
-	protected void generateLoot(BlockPos pos) {
-		for (int x = 0; x <= template.getSize().getX(); x++) {
-			for (int y = 0; y <= template.getSize().getY(); y++) {
-				for (int z = 0; z <= template.getSize().getZ(); z++) {
-					BlockPos lootContainerPos = new BlockPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
-
-					if (world.getTileEntity(lootContainerPos) != null) {
-						if (world.getTileEntity(lootContainerPos) instanceof TileEntityChest) {
-							TileEntityChest chest = (TileEntityChest) world.getTileEntity(lootContainerPos);
-							chest.setLootTable(lootLocation, rand.nextLong());
-						}
-					}
-				}
-			}
-		}
-	}
-
-	protected BlockPos findFlatSurface(BlockPos pos) {
-		int sizeX = templateSize.getX();
-		int sizeZ = templateSize.getZ();
-		return findFlatSurface(pos.getX(), pos.getZ(), sizeX, sizeZ, pos);
-	}
-
-	private BlockPos findFlatSurface(int x, int z, int sizeX, int sizeZ, BlockPos pos) {
-		int y = calculateGenerationHeight(x, z);
-		boolean flag = true;
-
-		for (int x1 = 0; x1 < sizeX; x1++) {
-			for (int z1 = 0; z1 < sizeZ; z1++) {
-				pos = new BlockPos(x + x1, y, z + z1);
-				boolean isAir = world.isAirBlock(pos);
-				flag &= isAir;
-			}
-		}
-
-		if (!flag)
-			return findFlatSurface(x - 1, z - 1, sizeX, sizeZ, pos);
-
-		return pos;
-	}
-
-	private int calculateGenerationHeight(int x, int z) {
+	protected int calculateGenerationHeight(int x, int z) {
 		int y = world.getHeight();
-		boolean foundGround = false;
-
-		while (!foundGround && y-- >= 0) {
-			Block block = world.getBlockState(new BlockPos(x, y, z)).getBlock();
-			foundGround = block != Blocks.AIR;
+		if (underground) {
+			int delta = maxHeight - minHeight;
+			y = minHeight + rand.nextInt(delta + 1);
+		} else {		
+			boolean foundGround = false;
+			
+			while (!foundGround && y-- >= 0) {
+				Block block = world.getBlockState(new BlockPos(x, y, z)).getBlock();
+				foundGround = block != Blocks.AIR;
+			}
 		}
-		return y + 1;
+		
+		return MMath.clamp(y + 1, 0, world.getHeight());
 	}
 
 	public List<Biome.SpawnListEntry> getSpawnList() {
@@ -132,21 +95,27 @@ public abstract class MGenStructure extends WorldGenerator implements IStructure
 	}
 
 	protected boolean canSpawnStructureAtCoords(BlockPos pos) {
-		MBiome biome1 = (MBiome)worldProvider.getBiomeForCoords(pos);
+		if (!canSpawn()) { 
+			return false; 
+		}
 		
-		for (MBiome biome : allowedBiomes) {
-			if (biome1.equals(biome)) 
-				return MathUtil.roll(1000);
+		MBiome biome = (MBiome)worldProvider.getBiomeForCoords(pos);
+		
+		for (MBiome currentBiome : allowedBiomes) {
+			if (biome.equals(currentBiome)) {
+				//return genBase.getNearestStructurePos(world, pos, false) != null;
+				return MMath.roll(100);
+			}
 		}
 		
 		return false;
 	}
 
+	protected boolean canSpawn() {
+		return !world.isRemote;
+	}
+	
 	public boolean isInsideStructure(BlockPos pos) {
-		if (world == null) {
-			return false;
-		} else {
-			return provider.getStructure(pos).equals(name);
-		}
+		return provider.getStructure(pos).equals(name);
 	}
 }

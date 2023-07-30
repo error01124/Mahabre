@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.MapGenCaves;
-import ru.d78boga.mahabre.util.MathUtil;
+import ru.d78boga.mahabre.util.MMath;
 
 public class MapGenMahabreCaves extends MapGenCaves {
 	private static IBlockState BLOCK_OBSIDIAN = Blocks.OBSIDIAN.getDefaultState();
@@ -176,7 +176,7 @@ public class MapGenMahabreCaves extends MapGenCaves {
 	}
 
 	protected void recursiveGenerate(World worldIn, int chunkX, int chunkZ, int originalX, int originalZ, ChunkPrimer chunkPrimerIn) {
-		if (!MathUtil.roll(50)) return;
+		if (!MMath.roll(50)) return;
 		
 		int i = rand.nextInt(rand.nextInt(rand.nextInt(15) + 1) + 1);
 
