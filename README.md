@@ -1,7 +1,7 @@
 # Mahabre
 
 ## Features
-- work hoppers with recycler
+- ~~work hoppers with recycler~~
 - catacombs
 - garbage heaps
 - dry steppes with grass
