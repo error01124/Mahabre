@@ -3,6 +3,7 @@ tile.garbage_laying.name=Мусорные отложения
 tile.recycler.name=Переработчик
 tile.resource_laying.name=Ресурсные отложения
 
+item.mushroom_growth.name=Грибной нарост
 item.gas_mask.name=Противогаз
 
 itemGroup.mahabre=Махабре

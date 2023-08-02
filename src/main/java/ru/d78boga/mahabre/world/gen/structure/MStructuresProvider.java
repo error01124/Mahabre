@@ -12,11 +12,11 @@ public class MStructuresProvider {
 		cache = new MStructureCache();
 	}
 	
-	public void setStructure(BlockPos pos, String name) {
-		cache.setStructure(pos, name);
+	public void setStructure(String name, BlockPos pos, BlockPos size) {
+		cache.setStructure(name, pos, size);
 	}
 	
-	public String getStructure(BlockPos pos) {
-		return cache.getStructure(pos);
+	public String getStructureName(BlockPos pos) {
+		return cache.getStructureName(pos);
 	}
 }

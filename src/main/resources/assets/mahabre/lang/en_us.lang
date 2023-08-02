@@ -3,6 +3,7 @@ tile.garbage_laying.name=Garbage laying
 tile.recycler.name=Recycler
 tile.resource_laying.name=Resource laying
 
+item.mushroom_growth.name=Mushroom growth
 item.gas_mask.name=Gas mask
 
 itemGroup.mahabre=Mahabre

@@ -5,22 +5,24 @@ import java.util.Random;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraft.world.WorldServer;
+import net.minecraft.world.biome.Biome.SpawnListEntry;
+import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.gen.structure.template.TemplateManager;
 import ru.d78boga.mahabre.util.MMath;
 import ru.d78boga.mahabre.world.biome.MBiome;
 
-public abstract class MGenStructure extends WorldGenerator implements IStructure {
+public abstract class MGenStructure {
 	public String registryName;
 	public String name;
-	protected List<Biome.SpawnListEntry> spawnList = Lists.newArrayList();
+	protected List<SpawnListEntry> spawnList = Lists.newArrayList();
 	protected List<MBiome> allowedBiomes = Lists.newArrayList();
 	protected Random rand = new Random();
 	protected World world;
@@ -28,84 +30,64 @@ public abstract class MGenStructure extends WorldGenerator implements IStructure
 	protected MinecraftServer mcServer;
 	protected TemplateManager manager;
 	protected MStructuresProvider provider;
-	protected boolean underground;
-	protected int minHeight = 0;
-	protected int maxHeight = 0;
+	protected MStructureProperties properties;
+	protected BlockPos startPos;
+	protected PlacementSettings placementSettings = (new PlacementSettings()).setChunk(null).setIgnoreEntities(false).setIgnoreStructureBlock(false).setMirror(Mirror.NONE).setRotation(Rotation.NONE);
 
 	public MGenStructure(MStructureProperties properties, String registryName, String name, MStructuresProvider provider) {
 		this.registryName = registryName;
 		this.name = name;
 		this.provider = provider;
+		this.properties = properties;
 		this.world = provider.world;
 		worldProvider = world.provider;
 		mcServer = world.getMinecraftServer();
+		WorldServer worldServer = mcServer.getWorld(0);
 		manager = worldServer.getStructureTemplateManager();
-		underground = properties.underground;
-		
-		if (underground) {			
-			minHeight = properties.minHeight;
-			maxHeight = properties.maxHeight;
+	}
+
+	public boolean generate(int chunkX, int chunkZ) {
+		BlockPos pos = new BlockPos(chunkX * 16, 0, chunkZ * 16);
+		return generate(pos);
+	}
+
+	public boolean generate(BlockPos pos) {
+		if (canSpawnStructureAtCoords(pos)) {			
+			pos = calculateSpawnPosition(pos);
+			generateStructure(pos);
+			generateLoot();
+			return true;
 		}
+		
+		return false;
 	}
 
-	public boolean generate(World worldIn, Random rand, int chunkX, int chunkZ) {
-		BlockPos pos = calculateSpawnPosition(chunkX, chunkZ);
-		return generate(worldIn, rand, pos);
-	}
-
-	public boolean generate(World worldIn, Random rand, BlockPos pos) {
-		if (!canSpawnStructureAtCoords(pos)) return false;
-
-		int x = pos.getX();
-		int z = pos.getZ();
-		int y = calculateGenerationHeight(x, z);
-		pos = new BlockPos(x, y, z);
-		generateStructure(worldIn, rand, pos);
-		return true;
-	}
-
-	protected BlockPos calculateSpawnPosition(int chunkX, int chunkZ) {
-		int x  = chunkX * 16;
-		int z = chunkZ * 16;
-		int y = 0; //calculateGenerationHeight(x, z);
-		return new BlockPos(x, y, z);
+	protected BlockPos calculateSpawnPosition(BlockPos pos) {
+		return properties.applyHeight(pos.getX(), pos.getZ(), rand, world);
 	}
 	
-	protected abstract void generateStructure(World world, Random rand, BlockPos pos);
+	protected abstract void generateStructure(BlockPos pos);
 
-	protected int calculateGenerationHeight(int x, int z) {
-		int y = world.getHeight();
-		if (underground) {
-			int delta = maxHeight - minHeight;
-			y = minHeight + rand.nextInt(delta + 1);
-		} else {		
-			boolean foundGround = false;
-			
-			while (!foundGround && y-- >= 0) {
-				Block block = world.getBlockState(new BlockPos(x, y, z)).getBlock();
-				foundGround = block != Blocks.AIR;
-			}
-		}
-		
-		return MMath.clamp(y + 1, 0, world.getHeight());
+	protected abstract void generateLoot();
+	
+	public ResourceLocation getLoot() {
+		return properties.getLoot(registryName);
 	}
-
-	public List<Biome.SpawnListEntry> getSpawnList() {
+	
+	public List<SpawnListEntry> getSpawnList() {
 		return spawnList;
 	}
 
 	protected boolean canSpawnStructureAtCoords(BlockPos pos) {
-		if (!canSpawn()) { 
-			return false; 
-		}
-		
-		MBiome biome = (MBiome)worldProvider.getBiomeForCoords(pos);
-		
-		for (MBiome currentBiome : allowedBiomes) {
-			if (biome.equals(currentBiome)) {
-				//return genBase.getNearestStructurePos(world, pos, false) != null;
-				return MMath.roll(100);
+		if (canSpawn()) {			
+			MBiome biome = (MBiome)worldProvider.getBiomeForCoords(pos);
+			
+			for (MBiome currentBiome : allowedBiomes) {
+				if (biome.equals(currentBiome)) {
+					return MMath.roll(100);
+				}
 			}
+			
 		}
 		
 		return false;
@@ -116,6 +98,6 @@ public abstract class MGenStructure extends WorldGenerator implements IStructure
 	}
 	
 	public boolean isInsideStructure(BlockPos pos) {
-		return provider.getStructure(pos).equals(name);
+		return provider.getStructureName(pos).equals(name);
 	}
 }

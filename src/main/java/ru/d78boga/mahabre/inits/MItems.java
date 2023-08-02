@@ -2,17 +2,18 @@ package ru.d78boga.mahabre.inits;
 
 import java.util.ArrayList;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemSeedFood;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
-import ru.d78boga.mahabre.blocks.MBlock;
 import ru.d78boga.mahabre.items.ItemGasMask;
-import ru.d78boga.mahabre.items.MItem;
 import ru.d78boga.mahabre.util.Util;
 
 public class MItems {
@@ -20,7 +21,8 @@ public class MItems {
 	public static Item CONSTRUCTION_DEBRIS;
 	public static Item RESOURCE_LAYING;
 	public static Item RECYCLER;
-
+	
+	public static Item MUSHROOM_GROWTH;
 	public static ItemGasMask GAS_MASK;
 	
 	public static MItems.Registry REGISTRY = new MItems.Registry();;
@@ -39,17 +41,19 @@ public class MItems {
 			RESOURCE_LAYING = register(MBlocks.RESOURCE_LAYING);
 			RECYCLER = register(MBlocks.RECYCLER);
 			
+			MUSHROOM_GROWTH = register(new ItemSeedFood(1, 0.3F, MBlocks.MUSHROOM_GROWTH, Blocks.SAND), "mushroom_growth");
 			GAS_MASK = register(new ItemGasMask());
 		}
 		
-		private <T extends MBlock> Item register(T block) {
-			Item item = new ItemBlock(block).setRegistryName(block.getRegistryName());
-			registry.register(item);
-			items.add(item);
-			return item;
+		private <T extends Block> Item register(T block) {
+			return register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
 		}
 		
-		private <T extends MItem> T register(T item) {
+		private <T extends ItemSeedFood> Item register(T item, String name) {
+			return register(item.setRegistryName(name).setUnlocalizedName(name));
+		}
+		
+		private <T extends Item> T register(T item) {
 			registry.register(item);
 			items.add(item);
 			return item;
